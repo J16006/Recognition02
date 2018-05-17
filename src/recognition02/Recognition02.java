@@ -14,7 +14,7 @@ public class Recognition02 {
 	public static void main(String[] args){
 
 		VisualRecognition service = new VisualRecognition("2018-03-19");
-		service.setApiKey("49d9fa9ea3694ffdcb2ec3a9812f7976a5e6d904");
+		service.setApiKey("J16006");
 
 		InputStream imagesStream = null;
 		try {
