@@ -2,9 +2,12 @@ package recognition02;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.watson.developer_cloud.visual_recognition.v3.VisualRecognition;
 import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifiedImages;
 import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyOptions;
@@ -14,7 +17,7 @@ public class Recognition02 {
 	public static void main(String[] args){
 
 		VisualRecognition service = new VisualRecognition("2018-03-19");
-		service.setApiKey("J16006");
+		service.setApiKey("49d9fa9ea3694ffdcb2ec3a9812f7976a5e6d904");
 
 		InputStream imagesStream = null;
 		try {
@@ -31,6 +34,30 @@ public class Recognition02 {
 		  .build();
 		ClassifiedImages result = service.classify(classifyOptions).execute();
 		System.out.println(result);
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node=null;
+		try {
+			 node = mapper.readTree(result.toString());
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		String class_fruit=node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("class").asText();
+		Double class_score = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("score").asDouble();
+		String class_fruit1=node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("class").asText();
+		Double class_score1 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("score").asDouble();
+		String class_fruit2=node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("class").asText();
+		Double class_score2 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("score").asDouble();
+
+
+		System.out.println(class_fruit);
+		System.out.println(class_score);
+		System.out.println(class_fruit1);
+		System.out.println(class_score1);
+		System.out.println(class_fruit2);
+		System.out.println(class_score2);
+
 
 	}
 
